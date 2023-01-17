@@ -45,7 +45,7 @@ jobs:
     - name: Run integration tests
       run: |
         source $VENV
-        python terminal.py ./openbb_terminal/miscellaneous/integration_tests_scripts -t
+        python terminal.py /home/runner/work/OpenBBTerminal_fork/OpenBBTerminal_fork/openbb_terminal/miscellaneous/integration_tests_scripts -t
 
     - name: Publish test results
       if: always()
