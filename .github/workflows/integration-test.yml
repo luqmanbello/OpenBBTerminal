@@ -12,7 +12,7 @@ on:
       - main
 
 concurrency:
-  group: integration-tests-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -55,4 +55,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Trigger Windows Build
-      uses: luqmanbello/OpenBBTerminal_fork/.github/workflows/windows.yml
+      uses: ./.github/workflows/windows.yml
