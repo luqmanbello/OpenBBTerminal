@@ -1,0 +1,55 @@
+# Github Action Workflow to run integration test on push to release branch
+name: Integration Tests
+
+on:
+  push:
+    branches:
+      - release/*
+      - feature/*
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+        architecture: x64
+
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: 1.1.13
+        virtualenvs-create: true
+        virtualenvs-in-project: true
+
+    - name: Load cached venv
+      id: cached-poetry-dependencies
+      uses: actions/cache@v3
+      with:
+        path: .venv
+        key: venv-${{ runner.os }}-v1-${{ hashFiles('**/poetry.lock') }}
+
+    - name: Install dependencies
+      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      run: poetry install --no-interaction -E optimization
+
+    - name: Run integration tests
+      run: |
+        source $VENV
+        python terminal.py ./openbb_terminal/miscellaneous/integration_tests_scripts -t
+
+    - name: Publish test results
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-results
+        path: test-results.xml
