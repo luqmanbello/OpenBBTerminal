@@ -58,4 +58,4 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Trigger Windows Build
-      uses: ${{github.workspace}}/.github/workflows/windows.yml
+      uses: ./.github/workflows/windows.yml@develop
