@@ -54,5 +54,8 @@ jobs:
   trigger-windows-build:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
     - name: Trigger Windows Build
       uses: ./.github/workflows/windows.yml
