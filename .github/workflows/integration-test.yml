@@ -53,3 +53,6 @@ jobs:
 
   trigger-windows-build:
       uses: luqmanbello/OpenBBTerminal_fork/.github/workflows/windows.yml@develop
+
+  trigger-docker-build:
+      uses: luqmanbello/OpenBBTerminal_fork/.github/workflows/docker.yml@$GITHUB_SHA
