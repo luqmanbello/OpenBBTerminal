@@ -52,10 +52,4 @@ jobs:
         python terminal.py /home/runner/work/OpenBBTerminal_fork/OpenBBTerminal_fork/openbb_terminal/miscellaneous/integration_tests_scripts -t
 
   trigger-windows-build:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Trigger Windows Build
       uses: OpenBBTerminal_fork/OpenBBTerminal_fork/.github/workflows/windows.yml@develop
