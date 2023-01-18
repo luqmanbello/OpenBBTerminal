@@ -54,5 +54,6 @@ jobs:
   trigger-windows-build:
       uses: luqmanbello/OpenBBTerminal_fork/.github/workflows/windows.yml@develop
 
+  # Trigger Docker build based on some conditions
   trigger-docker-build:
       uses: luqmanbello/OpenBBTerminal_fork/.github/workflows/docker.yml@develop
