@@ -55,4 +55,4 @@ jobs:
       uses: luqmanbello/OpenBBTerminal_fork/.github/workflows/windows.yml@develop
 
   trigger-docker-build:
-      uses: luqmanbello/OpenBBTerminal_fork/.github/workflows/docker.yml@${{github.ref}}
+      uses: luqmanbello/OpenBBTerminal_fork/.github/workflows/docker.yml@develop
