@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - release/*
-      - feature/*
   pull_request:
     branches:
       - develop
@@ -50,9 +49,3 @@ jobs:
       run: |
         source $VENV
         python terminal.py /home/runner/work/OpenBBTerminal_fork/OpenBBTerminal_fork/openbb_terminal/miscellaneous/integration_tests_scripts -t
-
-  trigger-windows-build:
-      uses: luqmanbello/OpenBBTerminal_fork/.github/workflows/windows.yml@develop
-
-  trigger-docker-build:
-      uses: luqmanbello/OpenBBTerminal_fork/.github/workflows/docker.yml@develop

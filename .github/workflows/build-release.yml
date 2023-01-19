@@ -1,0 +1,27 @@
+name: Trigger Build on Release and PRs to Main
+
+on:
+  push:
+    branches:
+      - release/*
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: 
+  actions: write
+
+jobs:
+  trigger-windows-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Windows Build
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: windows.yml
+          repo: luqmanbello/OpenBBTerminal_fork
+          token: ${{ secrets.GITHUB_TOKEN }}
