@@ -57,7 +57,7 @@ jobs:
       - name: Trigger Windows Build
         uses: benc-uk/workflow-dispatch@v1
         with:
-          workflow: Windows Build
+          workflow: windows.yml
           token: ${{ secrets.GITHUB_TOKEN }}
           inputs: '{"version": "${{ github.ref }}"}'
 

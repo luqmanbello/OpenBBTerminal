@@ -9,8 +9,7 @@ env:
   PYTHONNOUSERSITE: 1
 
 on:
-  schedule:
-    - cron: "0 0 * * *"
+  workflow_call:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
