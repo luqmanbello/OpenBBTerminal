@@ -27,8 +27,6 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: windows.yml
-          repo: luqmanbello/OpenBBTerminal_fork
-          token: ${{ secrets.GITHUB_TOKEN }}
   
   trigger-macos-build:
     runs-on: ubuntu-latest
@@ -37,8 +35,6 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: m1_macos_build.yml
-          repo: luqmanbello/OpenBBTerminal_fork
-          token: ${{ secrets.GITHUB_TOKEN }}
   
   trigger-intel-build:
     runs-on: ubuntu-latest
@@ -47,6 +43,3 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: intel_macos_build.yml
-          repo: luqmanbello/OpenBBTerminal_fork
-          token: ${{ secrets.GITHUB_TOKEN }}
-  
