@@ -15,7 +15,7 @@ on:
 jobs:
   Build:
     name: Intel MacOS Build
-    runs-on: [self-hosted, macos, x64]
+    runs-on: macos-latest
     steps:
       # Checkout repository main branch. this allows for the commit hashes to line up
       - name: Checkout

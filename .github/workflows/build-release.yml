@@ -25,3 +25,34 @@ jobs:
           workflow: windows.yml
           repo: luqmanbello/OpenBBTerminal_fork
           token: ${{ secrets.GITHUB_TOKEN }}
+  
+  trigger-macos-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Windows Build
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: m1_macos_build.yml
+          repo: luqmanbello/OpenBBTerminal_fork
+          token: ${{ secrets.GITHUB_TOKEN }}
+  
+  trigger-intel-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Windows Build
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: intel_macos_build.yml
+          repo: luqmanbello/OpenBBTerminal_fork
+          token: ${{ secrets.GITHUB_TOKEN }}
+  
+  trigger-docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Windows Build
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: docker.yml
+          repo: luqmanbello/OpenBBTerminal_fork
+          token: ${{ secrets.GITHUB_TOKEN }}
+  
