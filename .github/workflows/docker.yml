@@ -8,6 +8,10 @@ permissions:
   actions: write
   packages: write
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   publish-image:
     runs-on: ubuntu-latest
