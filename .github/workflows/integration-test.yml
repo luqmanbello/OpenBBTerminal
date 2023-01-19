@@ -15,6 +15,21 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  actions: write
+  checks: write
+  contents: write
+  deployments: write
+  id-token: write
+  issues: write
+  discussions: write
+  packages: write
+  pages: write
+  pull-requests: write
+  repository-projects: write
+  security-events: write
+  statuses: write
+
 jobs:
   integration-tests:
     runs-on: ubuntu-latest
@@ -54,14 +69,12 @@ jobs:
   trigger-windows-build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Set commit SHA variable
-      run: echo "COMMIT_SHA=$GITHUB_SHA" >> $GITHUB_ENV
-    - name: Run test workflow
-      uses: luqmanbello/OpenBBTerminal_fork/.github/workflows/windows.yml
-      env:
-        COMMIT_SHA: ${{ env.COMMIT_SHA }}
+      - name: Trigger Windows Build
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: windows.yml
+          repo: luqmanbello/OpenBBTerminal_fork
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   # Trigger Docker build based on some conditions
   trigger-docker-build:

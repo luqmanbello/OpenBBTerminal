@@ -13,5 +13,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  trigger-build:
-    
+  trigger-windows-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Windows Build
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: windows.yml
+          repo: luqmanbello/OpenBBTerminal_fork
+          token: ${{ secrets.GITHUB_TOKEN }}
