@@ -15,20 +15,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  actions: write
-  checks: write
-  contents: write
-  deployments: write
-  id-token: write
-  issues: write
-  discussions: write
-  packages: write
-  pages: write
-  pull-requests: write
-  repository-projects: write
-  security-events: write
-  statuses: write
+permissions: read-all
 
 jobs:
   integration-tests:
