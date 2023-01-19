@@ -4,6 +4,9 @@ on:
   workflow_call:
   workflow_dispatch:
 
+permissions: 
+  actions: write
+
 jobs:
   publish-image:
     runs-on: ubuntu-latest
