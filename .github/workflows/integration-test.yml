@@ -52,7 +52,14 @@ jobs:
         python terminal.py /home/runner/work/OpenBBTerminal_fork/OpenBBTerminal_fork/openbb_terminal/miscellaneous/integration_tests_scripts -t
 
   trigger-windows-build:
-      uses: luqmanbello/OpenBBTerminal_fork/.github/workflows/windows.yml@develop
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Windows Build
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Windows Build
+          token: ${{ secrets.GITHUB_TOKEN }}
+          inputs: '{"version": "${{ github.ref }}"}'
 
   # Trigger Docker build based on some conditions
   trigger-docker-build:
