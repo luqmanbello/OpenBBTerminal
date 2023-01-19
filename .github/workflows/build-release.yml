@@ -31,7 +31,6 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: windows.yml
-          token: ${{ secrets.GITHUB_TOKEN }}
   
   trigger-macos-build:
     runs-on: ubuntu-latest
@@ -40,7 +39,6 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: m1_macos_build.yml
-          token: ${{ secrets.GITHUB_TOKEN }}
   
   trigger-intel-build:
     runs-on: ubuntu-latest
@@ -49,7 +47,6 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: intel_macos_build.yml
-          token: ${{ secrets.GITHUB_TOKEN }}
   
   trigger-docker-build:
     runs-on: ubuntu-latest
@@ -58,5 +55,4 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: docker.yml
-          token: ${{ secrets.GITHUB_TOKEN }}
   
