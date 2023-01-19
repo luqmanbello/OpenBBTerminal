@@ -58,8 +58,6 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: windows.yml
-          token: ${{ secrets.GITHUB_TOKEN }}
-          inputs: '{"version": "${{ github.ref }}"}'
 
   # Trigger Docker build based on some conditions
   trigger-docker-build:
