@@ -6,6 +6,7 @@ on:
 
 permissions: 
   actions: write
+  packages: write
 
 jobs:
   publish-image:
