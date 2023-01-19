@@ -58,6 +58,7 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: windows.yml
+          repo: luqmanbello/OpenBBTerminal_fork
           token: ${{ secrets.GITHUB_TOKEN }}
 
   # Trigger Docker build based on some conditions
