@@ -12,6 +12,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions: 
+  actions: write
+
 jobs:
   trigger-windows-build:
     runs-on: ubuntu-latest
