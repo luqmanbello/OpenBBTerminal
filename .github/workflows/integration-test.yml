@@ -1,3 +1,4 @@
+# Github Action Workflow to run integration test on push to release branch
 name: Integration Tests
 
 on:
@@ -8,6 +9,8 @@ on:
     branches:
       - develop
       - main
+  schedule:
+    - cron: '0 0 * * *'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

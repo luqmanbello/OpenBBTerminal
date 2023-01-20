@@ -8,7 +8,7 @@ env:
   PIP_DEFAULT_TIMEOUT: 100
   PYTHONNOUSERSITE: 1
 
-on: workflow_dispatch
+on: [workflow_dispatch, workflow_call]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -17,7 +17,7 @@ concurrency:
 jobs:
   Build:
     name: M1 MacOS Build
-    runs-on: [self-hosted, macos, ARM64]
+    runs-on: macos-latest
     steps:
       # Checkout repository main branch. this allows for the commit hashes to line up
       - name: Checkout

@@ -1,4 +1,4 @@
-name: Nightly Build on the develop branch
+name: Trigger Build on Release and PRs to Main
 
 env:
   OPENBB_ENABLE_QUICK_EXIT: true
@@ -9,8 +9,13 @@ env:
   PYTHONNOUSERSITE: 1
 
 on:
-  schedule:
-    - cron: '0 0 * * *'
+  push:
+    branches:
+      - release/*
+      - feature/*
+  pull_request:
+    branches:
+      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -43,3 +48,11 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: intel_macos_build.yml
+  
+  trigger-docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Windows Build
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: docker.yml

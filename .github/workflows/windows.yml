@@ -1,4 +1,5 @@
 name: Windows 10 Full Clean Build with ML
+
 env:
   OPENBB_ENABLE_QUICK_EXIT: true
   OPENBB_LOG_COLLECT: false
@@ -6,15 +7,23 @@ env:
   OPENBB_USE_PROMPT_TOOLKIT: false
   PIP_DEFAULT_TIMEOUT: 100
   PYTHONNOUSERSITE: 1
-on:
-  push:
-    branches:
-      - "main"
-  workflow_dispatch:
-    inputs:
-      comments:
-        required: true
-        description: "Test scenario tags"
+
+# on:
+#   push:
+#     branches:
+#       - "main"
+#   workflow_dispatch:
+#     inputs:
+#       comments:
+#         required: true
+#         description: "Test scenario tags"
+
+on: [workflow_dispatch, workflow_call]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   windows-conda:
     name: Windows-latest, Conda-latest,  Python 3.9
