@@ -46,6 +46,8 @@ jobs:
           source build/docker/build.sh
           echo "OPENBBTERMINAL_DOCKER_POETRY_IMAGE=$OPENBBTERMINAL_DOCKER_POETRY_IMAGE" >> $GITHUB_ENV
           
+      # Check if the branch is release or main before pushing to docker
       - name: Publishing the Docker image
         run: |
           docker push "${OPENBBTERMINAL_DOCKER_POETRY_IMAGE}"
+        if: startsWith(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/heads/release/')
