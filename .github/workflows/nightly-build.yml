@@ -41,3 +41,11 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: intel_macos_build.yml
+
+  trigger-docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Windows Build
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: docker.yml
