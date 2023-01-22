@@ -3,11 +3,9 @@ name: Integration Tests
 on:
   push:
     branches:
-      - release/*
-  pull_request:
-    branches:
       - develop
       - main
+      - release/*
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
