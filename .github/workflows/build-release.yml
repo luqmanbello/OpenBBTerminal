@@ -13,8 +13,6 @@ on:
     branches:
       - release/*
       - feature/*
-  pull_request:
-    branches:
       - main
 
 concurrency:
@@ -32,7 +30,7 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: windows.yml
-  
+
   trigger-macos-build:
     runs-on: ubuntu-latest
     steps:
@@ -40,7 +38,7 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: m1_macos_build.yml
-  
+
   trigger-intel-build:
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +46,7 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: intel_macos_build.yml
-  
+
   trigger-docker-build:
     runs-on: ubuntu-latest
     steps:
