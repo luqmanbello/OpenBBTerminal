@@ -104,6 +104,15 @@ jobs:
           title: "Windows Build Integration test summary"
           path: failed_tests.txt
           channel: ${{ secrets.SLACK_CHANNEL_ID }}
+      
+      - name: Upload artifact to Slack
+        uses: adrey/slack-file-upload-action@master
+        with:
+          token: ${{ secrets.SLACK_API_TOKEN }}
+          initial_comment: "Windows Build Artifact"
+          title: "Windows Build Artifact"
+          path: .\build\nsis\OpenBB Terminal Setup.exe
+          channel: ${{ secrets.SLACK_CHANNEL_ID }}
 
       # Cleaning ------------------------
       # Make sure to add Remove-Item C:\Users\Administrator\Desktop\OPENBB-exports -Recurse whenever integration tests get fixed
