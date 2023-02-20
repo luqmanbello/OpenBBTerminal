@@ -46,21 +46,16 @@ jobs:
       - name: Check for changes to files to trigger unit test
         id: check-changes
         run: |
-          source_branch=$(jq -r .pull_request.head.ref "$GITHUB_EVENT_PATH")
-          target_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
+          current_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
 
-          changed_files=($(git diff --name-only origin/${target_branch} HEAD))
-          regex=".py$|openbb_terminal\/.*|pyproject.toml|poetry.lock|requirements.txt|requirements-full.txt"
-
-          if echo "${changed_files[@]}" | grep -qE "$regex"; then
+          if git diff --name-only origin/$current_branch HEAD | grep -E ".py$|openbb_terminal\/.*|pyproject.toml|poetry.lock|requirements.txt|requirements-full.txt"; then
             echo "check-changes=true" >> $GITHUB_OUTPUT
           else
             echo "check-changes=false" >> $GITHUB_OUTPUT
           fi
-        
+
       - name: Show output of previous step
         run: echo "check-changes=${{ steps.check-changes.outputs.check-changes }}"
-
 
 
   base-test:
