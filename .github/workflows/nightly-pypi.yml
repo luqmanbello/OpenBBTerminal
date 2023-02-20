@@ -31,6 +31,13 @@ jobs:
         sed -i '3s/version = "\(.*\)"/version = "\1-nightly"/' pyproject.toml
         cat pyproject.toml | grep version
 
+    - name: Install pypa/build
+      run: >-
+        python -m
+        pip install
+        build
+        --user
+
     - name: Build a binary wheel and a source tarball
       run: >-
         python -m
