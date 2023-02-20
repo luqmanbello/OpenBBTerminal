@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   deploy-test-pypi:
-    name: Build and publish distributions 📦 to PyPI and TestPyPI
+    name: Build and publish distributions 📦 to TestPyPI
     if: startsWith(github.ref, 'refs/heads/release/')
     runs-on: ubuntu-latest
 
@@ -80,7 +80,7 @@ jobs:
         password: ${{ secrets.PYPI_API_TOKEN }}
 
   deploy-nightly-pypi:
-    name: Build and publish nightly distributions 📦 to PyPI
+    name: Build and publish nightly distributions 📦 to Test PyPI
     if: startsWith(github.ref, 'refs/heads/feature/nightly-pypi')
     runs-on: ubuntu-latest
 
@@ -91,12 +91,17 @@ jobs:
       with:
         python-version: "3.9"
 
+    - name: Update version in pyproject.toml
+      run: |
+        sed -i "s/version = \".*\"/version = \"$(python -c 'import datetime; print(f\"{{version}}.Nightly{datetime.datetime.now().strftime(\"%Y%m%d\")}\")')\"/" pyproject.toml
+
     - name: Install pypa/build
       run: >-
         python -m
         pip install
         build
         --user
+
     - name: Build a binary wheel and a source tarball
       run: >-
         python -m
@@ -104,7 +109,7 @@ jobs:
         --sdist
         --wheel
         --outdir dist/
-        --tag-string nightly
+        .
 
     - name: Publish distribution 📦 to Test PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
