@@ -37,18 +37,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          fetch-depth: 100
+          fetch-depth: 0
 
       # Check for changes to python files, lockfiles and the openbb_terminal folder
       - name: Check for changes to files to trigger unit test
         id: check-changes
         run: |
-          git fetch origin pull/${{ github.event.pull_request.number }}/head:pr/${{ github.event.pull_request.number }}/head
-          pr_branch=$(jq -r '.ref' "${GITHUB_EVENT_PATH}")
-          changed_files=($(git diff --name-only "origin/${pr_branch}" HEAD))
-          regex=".py$|openbb_terminal\/.*|pyproject.toml|poetry.lock|requirements.txt|requirements-full.txt"
+          current_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
 
-          if echo "${changed_files[@]}" | grep -qE "$regex"; then
+          if git diff --name-only origin/$current_branch HEAD | grep -E ".py$|openbb_terminal\/.*|pyproject.toml|poetry.lock|requirements.txt|requirements-full.txt"; then
             echo "check-changes=true" >> $GITHUB_OUTPUT
           else
             echo "check-changes=false" >> $GITHUB_OUTPUT
