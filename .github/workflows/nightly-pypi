@@ -16,7 +16,7 @@ concurrency:
 jobs:
   deploy-nightly-pypi:
     name: Build and publish nightly distributions 📦 to Test PyPI
-    if: startsWith(github.ref, 'refs/heads/feature/')
+    if: startsWith(github.ref, 'refs/heads/feature/nightly-pypi')
     runs-on: ubuntu-latest
 
     steps:
