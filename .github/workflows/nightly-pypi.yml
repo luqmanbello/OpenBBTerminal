@@ -3,8 +3,6 @@ name: Deploy to PyPI - Nightly
 on:
   push:
     branches:
-      - release/*
-      - main
       - feature/*
 
   workflow_dispatch:
@@ -16,7 +14,7 @@ concurrency:
 jobs:
   deploy-nightly-pypi:
     name: Build and publish nightly distributions 📦 to Test PyPI
-    if: startsWith(github.ref, 'refs/heads/feature/nightly-pypi')
+    if: startsWith(github.ref, 'refs/heads/feature/')
     runs-on: ubuntu-latest
 
     steps:
@@ -25,6 +23,11 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: "3.9"
+
+    - name: Update version in pyproject.toml
+      run: |
+        sed -i "3s/version = \"\(.*\)\"/version = \"\1.dev$(date +%Y%m%d)\"/" pyproject.toml
+        head pyproject.toml | grep version
 
     - name: Install pypa/build
       run: >-
@@ -41,11 +44,6 @@ jobs:
         --wheel
         --outdir dist/
         .
-
-    - name: Update version in pyproject.toml
-      run: |
-        sed -i '3s/version = "\(.*\)"/version = "\1-nightly"/' pyproject.toml
-        cat pyproject.toml | grep version
 
     - name: Publish distribution 📦 to Test PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
