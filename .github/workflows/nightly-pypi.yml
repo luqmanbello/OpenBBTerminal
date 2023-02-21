@@ -26,8 +26,9 @@ jobs:
 
     - name: Update version in pyproject.toml
       run: |
+        sed -i 's/name = ".*"/name = "openbb-nightly"/' pyproject.toml
         sed -i "3s/version = \"\(.*\)\"/version = \"\1.dev$(date +%Y%m%d)\"/" pyproject.toml
-        head pyproject.toml | grep version
+        head pyproject.toml
 
     - name: Install pypa/build
       run: >-
