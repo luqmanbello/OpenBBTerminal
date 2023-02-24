@@ -28,9 +28,6 @@ jobs:
   code-linting:
     name: General Code Linting
     runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.event_name }}-${{ github.repository }}-${{ github.ref }}-code-linting
-      cancel-in-progress: true
     steps:
       - name: Checkout Code
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # actions/checkout v3.0.2
