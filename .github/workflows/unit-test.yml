@@ -15,7 +15,7 @@ on:
     branches:
       - develop
       - main
-    types: [opened, synchronize, edited, closed, ready_for_review, review_request_removed]
+    types: [opened, synchronize, edited, closed, ready_for_review]
   push:
     branches:
       - release/*
