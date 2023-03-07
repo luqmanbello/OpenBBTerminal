@@ -82,9 +82,9 @@ jobs:
         run: |
           count=${{ steps.count-changes.outputs.count }}
           if [[ $count -lt 10 ]]; then
-            echo "Number of changed files is less than 10" >> $GITHUB_OUTPUT
+            echo "Number of changed files is less than 10"
           else
-            echo "Number of changed files is greater than or equal to 10" >> $GITHUB_OUTPUT
+            echo "Number of changed files is greater than or equal to 10"
           fi
 
   base-test:
