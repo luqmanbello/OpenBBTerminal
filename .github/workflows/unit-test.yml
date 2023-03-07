@@ -65,23 +65,26 @@ jobs:
         count: ${{ steps.count-changes.outputs.count }}
       steps:
         - name: Checkout Code
-          uses: actions/checkout@v1
+          uses: actions/checkout@v2
 
         - name: Count files changed
           id: count-changes
           run: |
             current_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
             python_files=$(git diff --name-only origin/$current_branch HEAD | grep -E ".py$")
-            count=$(echo $python_files | tr ' ' '\n' | wc -l)
-            if [[ $count -lt 10 ]]; then
-              echo "count-changes=true" >> $GITHUB_ENV
-            else
-              echo "count-changes=false" >> $GITHUB_ENV
-            fi
+            echo "python_files=$python_files"
+            
 
-        - name: Check number of files changed
-          run: |
-            echo "count-changes=${{ steps.count-changes.outputs.count-changes }}"
+        #     count=$(echo $python_files | tr ' ' '\n' | wc -l)
+        #     if [[ $count -lt 10 ]]; then
+        #       echo "count-changes=true" >> $GITHUB_ENV
+        #     else
+        #       echo "count-changes=false" >> $GITHUB_ENV
+        #     fi
+
+        # - name: Check number of files changed
+        #   run: |
+        #     echo "count-changes=${{ steps.count-changes.outputs.count-changes }}"
 
   base-test:
     name: Base Tests - Ubuntu-latest - Python 3.9
