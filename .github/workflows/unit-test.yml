@@ -21,7 +21,6 @@ on:
       - release/*
   merge_group:
     types: [checks_requested]
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -47,7 +46,7 @@ jobs:
       - name: Check for changes to files to trigger unit test
         id: check-changes
         run: |
-          current_branch=${{ github.event.pull_request.head.ref }}
+          current_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
 
           if git diff --name-only origin/$current_branch HEAD | grep -E ".py$|openbb_terminal\/.*|pyproject.toml|poetry.lock|requirements.txt|requirements-full.txt"; then
             echo "check-changes=true" >> $GITHUB_OUTPUT
@@ -74,8 +73,7 @@ jobs:
       - name: Count Python files changed
         id: count-changes
         run: |
-          current_branch=${{ github.event.pull_request.head.ref }}
-
+          current_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
           python_files=$(git diff --name-only origin/$current_branch HEAD | grep -E ".py$")
           if [[ ! -z "$python_files" ]]; then
             count=$(echo $python_files | tr ' ' '\n' | wc -l)
