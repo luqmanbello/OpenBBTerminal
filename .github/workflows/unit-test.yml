@@ -21,6 +21,7 @@ on:
       - release/*
   merge_group:
     types: [checks_requested]
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -80,7 +81,7 @@ jobs:
             count=$(echo $python_files | tr ' ' '\n' | wc -l)
             echo "count=$count" >> $GITHUB_OUTPUT
           else
-            echo "count=1" >> $GITHUB_OUTPUT
+            echo "count='10'" >> $GITHUB_OUTPUT
           fi
 
       - name: Show output of previous step
