@@ -76,7 +76,7 @@ jobs:
           current_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
           python_files=$(git diff --name-only origin/$current_branch HEAD | grep -E ".py$")
           count=$(echo $python_files | tr ' ' '\n' | wc -l)
-          echo "$count"
+          echo "count=$count" >> $GITHUB_OUTPUT
 
       - name: Show output of previous step
         run: echo "count=${{ steps.count-changes.outputs.count }}"
@@ -92,7 +92,7 @@ jobs:
 
   base-test:
     name: Base Tests - Ubuntu-latest - Python 3.9
-    needs: [check-files-changed]
+    needs: [count-files-changed, check-files-changed]
     runs-on: ubuntu-latest
     if: needs.check-files-changed.outputs.check-changes == 'true' && github.event.pull_request.base.ref == 'develop'
     steps:
