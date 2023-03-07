@@ -70,13 +70,13 @@ jobs:
           fetch-depth: 100
           persist-credentials: false
 
-      - name: Count Python files changed
+      - name: Count Python files changed and check if they are less than 10
         id: count-changes
         run: |
           current_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
           python_files=$(git diff --name-only origin/$current_branch HEAD | grep -E ".py$")
-          echo "count=$(echo $python_files | tr ' ' '\n' | wc -l)"
-          
+          count=$(echo $python_files | tr ' ' '\n' | wc -l)
+
           if [[ $count -lt 10 ]]; then
             echo "count-changes=true" >> $GITHUB_OUTPUT
           else
@@ -84,7 +84,7 @@ jobs:
           fi
 
       - name: Show output of previous step
-        run:  echo "check-changes=${{ steps.count-changes.outputs.count-changes }}"
+        run:  echo "count-changes=${{ steps.count-changes.outputs.count-changes }}"
 
   base-test:
     name: Base Tests - Ubuntu-latest - Python 3.9
