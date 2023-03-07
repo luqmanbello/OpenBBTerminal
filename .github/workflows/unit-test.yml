@@ -81,15 +81,19 @@ jobs:
       - name: Show output of previous step
         run: echo "count=${{ steps.count-changes.outputs.count }}"
 
-      - name: Check number of files changed
+      - name: Check number of python files changed is less than 10
+        id: verify-changes
         run: |
           count=${{ steps.count-changes.outputs.count }}
           if [[ $count -lt 10 ]]; then
-            echo "Number of changed files is less than 10"
+            echo "verify-changes=true" >> $GITHUB_OUTPUT
           else
-            echo "Number of changed files is greater than or equal to 10"
+            echo "verify-changes=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Show output of previous step
+        run: echo "verify-changes=${{ steps.verify-changes.outputs.verify-changes }}"
+        
   base-test:
     name: Base Tests - Ubuntu-latest - Python 3.9
     needs: [count-files-changed, check-files-changed]
