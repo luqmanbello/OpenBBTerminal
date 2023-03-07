@@ -61,7 +61,6 @@ jobs:
   count-files-changed:
     name: Count Python files changed
     runs-on: ubuntu-latest
-    needs: check-files-changed
     outputs:
       count: ${{ steps.count-changes.outputs.count }}
     steps:
