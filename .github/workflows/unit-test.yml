@@ -65,7 +65,7 @@ jobs:
         count: ${{ steps.count-changes.outputs.count }}
       steps:
         - name: Checkout Code
-          uses: actions/checkout@v2
+          uses: actions/checkout@v1
 
         - name: Count files changed
           id: count-changes
@@ -73,7 +73,7 @@ jobs:
             current_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
             python_files=$(git diff --name-only origin/$current_branch HEAD | grep -E ".py$")
             echo "python_files=$python_files"
-            
+
 
         #     count=$(echo $python_files | tr ' ' '\n' | wc -l)
         #     if [[ $count -lt 10 ]]; then
