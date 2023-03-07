@@ -77,6 +77,7 @@ jobs:
           python_files=$(git diff --name-only origin/$current_branch HEAD | grep -E ".py$")
           count=$(echo $python_files | tr ' ' '\n' | wc -l)
           echo "count=$count" >> $GITHUB_OUTPUT
+
       - name: Show output of previous step
         run: echo "count=${{ steps.count-changes.outputs.count }}"
 
@@ -93,7 +94,7 @@ jobs:
     name: Base Tests - Ubuntu-latest - Python 3.9
     needs: [count-files-changed, check-files-changed]
     runs-on: ubuntu-latest
-    if: needs.check-files-changed.outputs.check-changes == 'true' && github.event.pull_request.base.ref == 'develop' && needs.count-files-changed.outputs.count-changes == 'true'
+    if: needs.check-files-changed.outputs.check-changes == 'true' && github.event.pull_request.base.ref == 'develop'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
