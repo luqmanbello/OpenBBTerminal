@@ -66,6 +66,11 @@ jobs:
       steps:
         - name: Checkout Code
           uses: actions/checkout@v1
+          with:
+            fetch-depth: 100
+            # The GitHub token is preserved by default but this job doesn't need
+            # to be able to push to GitHub.
+            persist-credentials: false
 
         - name: Count files changed
           id: count-changes
