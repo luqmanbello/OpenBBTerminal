@@ -46,7 +46,7 @@ jobs:
       - name: Check for changes to files to trigger unit test
         id: check-changes
         run: |
-          current_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
+          current_branch=${{ github.event.pull_request.head.ref }}
 
           if git diff --name-only origin/$current_branch HEAD | grep -E ".py$|openbb_terminal\/.*|pyproject.toml|poetry.lock|requirements.txt|requirements-full.txt"; then
             echo "check-changes=true" >> $GITHUB_OUTPUT
