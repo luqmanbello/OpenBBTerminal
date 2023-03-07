@@ -64,8 +64,8 @@ jobs:
     outputs:
       count: ${{ steps.count-changes.outputs.count }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
+      - name: Checkout code
+        uses: actions/checkout@v2
         with:
           fetch-depth: 100
           persist-credentials: false
@@ -73,19 +73,20 @@ jobs:
       - name: Count Python files changed
         id: count-changes
         run: |
-          current_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
+          current_branch=${{ github.head_ref }}
           python_files=$(git diff --name-only origin/$current_branch HEAD | grep -E ".py$")
-          echo "count=$(echo $python_files | tr ' ' '\n' | wc -l)"
-          echo "count=$count" >> $GITHUB_OUTPUT
+          count=$(echo $python_files | tr ' ' '\n' | wc -l)
+          echo "::set-output name=count::$count"
 
       - name: Check number of files changed
         run: |
           count=${{ steps.count-changes.outputs.count }}
-          if [[ $count -lt 10 ]]; then
+          if [ $count -lt 10 ]; then
             echo "Number of changed files is less than 10"
           else
             echo "Number of changed files is greater than or equal to 10"
           fi
+
 
   base-test:
     name: Base Tests - Ubuntu-latest - Python 3.9
