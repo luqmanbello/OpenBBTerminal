@@ -76,7 +76,7 @@ jobs:
           current_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
           python_files=$(git diff --name-only origin/$current_branch HEAD | grep -E ".py$")
           count=$(echo $python_files | tr ' ' '\n' | wc -l)
-          echo "count=$count" >> $GITHUB_OUTPUT
+          echo "$count"
 
       - name: Show output of previous step
         run: echo "count=${{ steps.count-changes.outputs.count }}"
