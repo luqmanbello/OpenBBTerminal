@@ -73,7 +73,8 @@ jobs:
       - name: Count Python files changed
         id: count-changes
         run: |
-          current_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
+          current_branch=${{ github.event.pull_request.head.ref }}
+
           python_files=$(git diff --name-only origin/$current_branch HEAD | grep -E ".py$")
           if [[ ! -z "$python_files" ]]; then
             count=$(echo $python_files | tr ' ' '\n' | wc -l)
