@@ -76,24 +76,21 @@ jobs:
         run: |
           current_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
           python_files=$(git diff --name-only origin/$current_branch HEAD | grep -E ".py$")
-          count=$(echo $python_files | tr ' ' '\n' | wc -l)
+          echo "count=$(echo $python_files | tr ' ' '\n' | wc -l)"
           echo "count=$count" >> $GITHUB_OUTPUT
-
-      - name: Show output of previous step
-        run: echo "count=${{ steps.count-changes.outputs.count }}"
 
       - name: Check number of files changed
         run: |
           count=${{ steps.count-changes.outputs.count }}
           if [[ $count -lt 10 ]]; then
-            echo "Number of changed files is less than 10"
+            echo "Number of changed files is less than 10" >> $GITHUB_OUTPUT
           else
-            echo "Number of changed files is greater than or equal to 10"
+            echo "Number of changed files is greater than or equal to 10" >> $GITHUB_OUTPUT
           fi
 
   base-test:
     name: Base Tests - Ubuntu-latest - Python 3.9
-    needs: [check-files-changed]
+    needs: [count-files-changed, check-files-changed]
     runs-on: ubuntu-latest
     if: needs.check-files-changed.outputs.check-changes == 'true' && github.event.pull_request.base.ref == 'develop'
     steps:
