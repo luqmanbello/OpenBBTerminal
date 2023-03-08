@@ -80,20 +80,6 @@ jobs:
       - name: Show output of previous step
         run: echo "count=${{ steps.count-changes.outputs.count }}"
 
-      # - name: Check number of python files changed is less than 10
-      #   id: pr-size
-      #   run: |
-      #     count=${{ steps.count-changes.outputs.count }}
-      #     if [[ $count -lt 10 ]]; then
-      #       echo "pr-size=true" >> $GITHUB_OUTPUT
-      #     else
-      #       echo "pr-size=false" >> $GITHUB_OUTPUT
-      #     fi
-
-      # - name: Show output of previous step
-      #   run: echo "pr-size=${{ steps.pr-size.outputs.pr-size }}"
-
-
   base-test:
     name: Base Tests - Ubuntu-latest - Python 3.9
     needs: [count-files-changed, check-files-changed]
