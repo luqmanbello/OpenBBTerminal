@@ -73,31 +73,32 @@ jobs:
       - name: Count Python files changed
         id: count-changes
         run: |
-          count=$(git diff --name-only origin/feature/ci develop | grep -E ".py$" | wc -l)
+          current_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
+          count=$(git diff --name-only origin/$current_branch develop | grep -E ".py$" | wc -l)
           echo "count=$count" >> $GITHUB_OUTPUT
 
       - name: Show output of previous step
         run: echo "count=${{ steps.count-changes.outputs.count }}"
 
-      - name: Check number of python files changed is less than 10
-        id: pr-size
-        run: |
-          count=${{ steps.count-changes.outputs.count }}
-          if [[ $count -lt 10 ]]; then
-            echo "pr-size=true" >> $GITHUB_OUTPUT
-          else
-            echo "pr-size=false" >> $GITHUB_OUTPUT
-          fi
+      # - name: Check number of python files changed is less than 10
+      #   id: pr-size
+      #   run: |
+      #     count=${{ steps.count-changes.outputs.count }}
+      #     if [[ $count -lt 10 ]]; then
+      #       echo "pr-size=true" >> $GITHUB_OUTPUT
+      #     else
+      #       echo "pr-size=false" >> $GITHUB_OUTPUT
+      #     fi
 
-      - name: Show output of previous step
-        run: echo "pr-size=${{ steps.pr-size.outputs.pr-size }}"
+      # - name: Show output of previous step
+      #   run: echo "pr-size=${{ steps.pr-size.outputs.pr-size }}"
 
 
   base-test:
     name: Base Tests - Ubuntu-latest - Python 3.9
     needs: [count-files-changed, check-files-changed]
     runs-on: ubuntu-latest
-    if: needs.check-files-changed.outputs.check-changes == 'true' && github.event.pull_request.base.ref == 'develop'
+    if: needs.check-files-changed.outputs.check-changes == 'true' && github.event.pull_request.base.ref == 'develop' && needs.count-files-changed.outputs.count < 20
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
