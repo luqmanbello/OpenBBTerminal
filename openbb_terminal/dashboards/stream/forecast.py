@@ -9,7 +9,7 @@ import yfinance as yf
 
 from openbb_terminal.forecast import helpers
 from openbb_terminal.rich_config import console
-from openbb_terminal.sdk import openbb
+from sdk import openbb
 
 st.set_page_config(layout="wide")
 
