@@ -5,11 +5,14 @@ on:
     branches:
       - main
       - release/*
-      # - docs/*
   pull_request:
-    types: [opened, synchronize, closed]
+    types: [closed]
     branches:
       - develop
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   generate:
