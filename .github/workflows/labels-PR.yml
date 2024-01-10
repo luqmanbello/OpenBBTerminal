@@ -1,6 +1,6 @@
 name: Pull Request Labels
 
-"on":
+on:
   pull_request:
     types: [opened, reopened, labeled, unlabeled, synchronize]
 
@@ -8,11 +8,11 @@ jobs:
   label:
     runs-on: ubuntu-latest
     steps:
-      - uses: mheap/github-action-required-labels@v5
-        with:
-          mode: minimum
-          count: 1
-          labels: "guides, bug, build, docker, docs, feat XS, feat S, feat M, feat L, feat XL, help wanted, refactor, tests, dependencies, release"
+      # - uses: mheap/github-action-required-labels@v5
+      #   with:
+      #     mode: minimum
+      #     count: 1
+      #     labels: "guides, bug, build, docker, docs, feat XS, feat S, feat M, feat L, feat XL, help wanted, refactor, tests, dependencies, release"
       - uses: mheap/github-action-required-labels@v5
         with:
           mode: exactly
