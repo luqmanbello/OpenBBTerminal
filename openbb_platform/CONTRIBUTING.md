@@ -263,7 +263,7 @@ For development setup, use the provided script to install all extensions and the
 
 ### How to build OpenBB extensions?
 
-We have a Cookiecutter template that will help you get started. It serves as a jumpstart for your extension development, so you can focus on the data and not on the boilerplate.
+We have a Cookiecutter template that will help you get started. It serves as a jump-start for your extension development, so you can focus on the data and not on the boilerplate.
 
 Please refer to the [Cookiecutter template](https://github.com/OpenBB-finance/openbb-cookiecutter) and follow the instructions there.
 
