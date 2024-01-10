@@ -25,6 +25,18 @@ exclude-contributors:
   - 'IgorWounds'
   - 'minhhoang1023'
 
+autolabeler:
+  - label: 'platform-enhancement'
+    files:
+      - 'openbb_platform/.*'
+    branch:
+      - '/feature\/.+/'
+  - label: 'platform-bug'
+    files:
+      - 'openbb_platform/.*'
+    branch:
+      - '/hotfix\/.+/'
+
 template: |
   ## Thank you and welcome to our new contributors 🔥
   $CONTRIBUTORS
