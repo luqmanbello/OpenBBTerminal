@@ -16,3 +16,6 @@ labels:
     branch: "^hotfix/.*"
     files: 
       - "openbb_platform/.*"
+
+  - label: "enhancements"
+    branch: "^feature/.*"
