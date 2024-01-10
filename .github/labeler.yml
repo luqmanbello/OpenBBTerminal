@@ -1,14 +1,14 @@
 version: 1
 labels:
 - label: "platform"
-  files: "openbb_platform/.*"
+  files: "openbb_platform\\/.*"
 
 - label: "bug"
   branch: "^hotfix/.*"
-  files: "openbb_platform/.*"
+  files: "openbb_platform\\/.*"
 - label: "platform"
   branch: "^hotfix/.*"
-  files: "openbb_platform/.*"
+  files: "openbb_platform\\/.*"
 - label: "v4"
   branch: "^hotfix/.*"
-  files: "openbb_platform/.*"
+  files: "openbb_platform\\/.*"
