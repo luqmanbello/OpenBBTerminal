@@ -2,6 +2,9 @@
 """OECD provider module."""
 =======
 """FRED provider module."""
+<<<<<<< HEAD
+>>>>>>> 13283fbfce (CI listing quick fix (#6002))
+=======
 >>>>>>> 13283fbfce (CI listing quick fix (#6002))
 
 from openbb_core.provider.abstract.provider import Provider

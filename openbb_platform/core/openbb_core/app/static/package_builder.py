@@ -403,12 +403,15 @@ class ClassDefinition:
                     ),
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                     examples=route.openapi_extra.get("examples", None),
 =======
 >>>>>>> 13283fbfce (CI listing quick fix (#6002))
 =======
                     examples=route.openapi_extra.get("examples", None),
 >>>>>>> c6eefd26b9 ([Feature] - Support for custom examples in router commands (#5993))
+=======
+>>>>>>> 13283fbfce (CI listing quick fix (#6002))
                 )  # type: ignore
             else:
                 doc += "    /" if path else "    /"

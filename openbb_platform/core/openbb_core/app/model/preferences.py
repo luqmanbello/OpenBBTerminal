@@ -25,9 +25,12 @@ class Preferences(BaseModel):
     request_timeout: PositiveInt = 15
     metadata: bool = True
 <<<<<<< HEAD
+<<<<<<< HEAD
     field_order: bool = (
         False  # Whether to display the field order by which the data was defined
     )
+=======
+>>>>>>> 13283fbfce (CI listing quick fix (#6002))
 =======
 >>>>>>> 13283fbfce (CI listing quick fix (#6002))
     output_type: Literal["OBBject", "dataframe", "polars", "numpy", "dict", "chart"] = (
