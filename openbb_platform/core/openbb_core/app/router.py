@@ -233,6 +233,20 @@ class Router:
         api_router = self._api_router
 
         model = kwargs.pop("model", "")
+        deprecation_message = kwargs.pop("deprecation_message", None)
+        examples = kwargs.pop("examples", [])
+        exclude_auto_examples = kwargs.pop("exclude_auto_examples", False)
+
+        if func := SignatureInspector.complete(func, model):
+            if not exclude_auto_examples:
+                examples.insert(
+                    0,
+                    ExampleGenerator.generate(
+                        route=SignatureInspector.get_operation_id(func, sep="."),
+                        model=model,
+                    ),
+                )
+
         examples = kwargs.pop("examples", [])
         exclude_auto_examples = kwargs.pop("exclude_auto_examples", False)
 
@@ -247,6 +261,9 @@ class Router:
                 )
 
             kwargs["response_model_exclude_unset"] = True
+            kwargs["openapi_extra"] = kwargs.get("openapi_extra", {})
+            kwargs["openapi_extra"]["model"] = model
+            kwargs["openapi_extra"]["examples"] = examples
             kwargs["openapi_extra"] = kwargs.get("openapi_extra", {})
             kwargs["openapi_extra"]["model"] = model
             kwargs["openapi_extra"]["examples"] = examples
@@ -307,6 +324,7 @@ class SignatureInspector:
     """Inspect function signature."""
 
     @classmethod
+    def complete(
     def complete(
         cls, func: Callable[P, OBBject], model: str
     ) -> Optional[Callable[P, OBBject]]:
@@ -452,6 +470,7 @@ class SignatureInspector:
             description = doc.split("    Parameters\n    ----------")[0]
             description = description.split("    Returns\n    -------")[0]
             description = description.split("    Example\n    -------")[0]
+            description = description.split("    Example\n    -------")[0]
             description = "\n".join([line.strip() for line in description.split("\n")])
 
             return description
@@ -459,11 +478,13 @@ class SignatureInspector:
 
     @staticmethod
     def get_operation_id(func: Callable, sep: str = "_") -> str:
+    def get_operation_id(func: Callable, sep: str = "_") -> str:
         """Get operation id."""
         operation_id = [
             t.replace("_router", "").replace("openbb_", "")
             for t in func.__module__.split(".") + [func.__name__]
         ]
+        cleaned_id = sep.join({c: "" for c in operation_id if c}.keys())
         cleaned_id = sep.join({c: "" for c in operation_id if c}.keys())
         return cleaned_id
 

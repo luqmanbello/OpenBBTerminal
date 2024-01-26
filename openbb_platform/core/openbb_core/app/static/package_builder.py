@@ -9,11 +9,9 @@ from inspect import Parameter, _empty, isclass, signature
 from json import dumps, load
 from pathlib import Path
 from typing import (
-    Any,
     Callable,
     Dict,
     List,
-    Literal,
     Optional,
     OrderedDict,
     Set,
@@ -22,7 +20,6 @@ from typing import (
     TypeVar,
     Union,
     get_args,
-    get_origin,
     get_type_hints,
 )
 
@@ -38,7 +35,7 @@ from openbb_core.app.charting_service import ChartingService
 from openbb_core.app.extension_loader import ExtensionLoader, OpenBBGroups
 from openbb_core.app.model.custom_parameter import OpenBBCustomParameter
 from openbb_core.app.provider_interface import ProviderInterface
-from openbb_core.app.router import CommandMap, RouterLoader
+from openbb_core.app.router import RouterLoader
 from openbb_core.app.static.utils.console import Console
 from openbb_core.app.static.utils.linters import Linters
 from openbb_core.env import Env
@@ -401,17 +398,7 @@ class ClassDefinition:
                         if route.openapi_extra
                         else None
                     ),
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                     examples=route.openapi_extra.get("examples", None),
-=======
->>>>>>> 13283fbfce (CI listing quick fix (#6002))
-=======
-                    examples=route.openapi_extra.get("examples", None),
->>>>>>> c6eefd26b9 ([Feature] - Support for custom examples in router commands (#5993))
-=======
->>>>>>> 13283fbfce (CI listing quick fix (#6002))
                 )  # type: ignore
             else:
                 doc += "    /" if path else "    /"
