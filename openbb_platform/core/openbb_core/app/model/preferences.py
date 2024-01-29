@@ -1,7 +1,5 @@
 """Preferences for the OpenBB platform."""
 
-"""Preferences for the OpenBB platform."""
-
 from pathlib import Path
 from typing import Literal
 
@@ -9,8 +7,6 @@ from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 
 
 class Preferences(BaseModel):
-    """Preferences for the OpenBB platform."""
-
     """Preferences for the OpenBB platform."""
 
     data_directory: str = str(Path.home() / "OpenBBUserData")
@@ -38,7 +34,6 @@ class Preferences(BaseModel):
     model_config = ConfigDict(validate_assignment=True)
 
     def __repr__(self) -> str:
-        """Return a string representation of the model."""
         """Return a string representation of the model."""
         return f"{self.__class__.__name__}\n\n" + "\n".join(
             f"{k}: {v}" for k, v in self.model_dump().items()
