@@ -233,7 +233,6 @@ class Router:
         api_router = self._api_router
 
         model = kwargs.pop("model", "")
-        deprecation_message = kwargs.pop("deprecation_message", None)
         examples = kwargs.pop("examples", [])
         exclude_auto_examples = kwargs.pop("exclude_auto_examples", False)
 
