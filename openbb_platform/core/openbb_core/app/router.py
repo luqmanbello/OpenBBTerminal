@@ -25,6 +25,7 @@ from pydantic.v1.validators import find_validators
 from typing_extensions import Annotated, ParamSpec, _AnnotatedAlias
 
 from openbb_core.app.deprecation import DeprecationSummary, OpenBBDeprecationWarning
+from openbb_core.app.deprecation import DeprecationSummary, OpenBBDeprecationWarning
 from openbb_core.app.example_generator import ExampleGenerator
 from openbb_core.app.extension_loader import ExtensionLoader
 from openbb_core.app.model.abstract.warning import OpenBBWarning
@@ -246,19 +247,6 @@ class Router:
                     ),
                 )
 
-        examples = kwargs.pop("examples", [])
-        exclude_auto_examples = kwargs.pop("exclude_auto_examples", False)
-
-        if func := SignatureInspector.complete(func, model):
-            if not exclude_auto_examples:
-                examples.insert(
-                    0,
-                    ExampleGenerator.generate(
-                        route=SignatureInspector.get_operation_id(func, sep="."),
-                        model=model,
-                    ),
-                )
-
             kwargs["response_model_exclude_unset"] = True
             kwargs["openapi_extra"] = kwargs.get("openapi_extra", {})
             kwargs["openapi_extra"]["model"] = model
@@ -296,7 +284,13 @@ class Router:
             )
 
             # For custom deprecation
+            # For custom deprecation
             if kwargs.get("deprecated", False):
+                deprecation: OpenBBDeprecationWarning = kwargs.pop("deprecation")
+
+                kwargs["summary"] = DeprecationSummary(
+                    deprecation.long_message, deprecation
+                )
                 deprecation: OpenBBDeprecationWarning = kwargs.pop("deprecation")
 
                 kwargs["summary"] = DeprecationSummary(
