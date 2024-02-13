@@ -50,3 +50,9 @@ jobs:
         gh pr comment ${{ github.event.pull_request.number }} --body "$reason Please review our [branch naming guidelines](LINK_TO_GUIDELINES)."
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Fail if branch name is invalid
+      if: ${{ steps.check-develop-branch.outputs.reason || steps.check-main-branch.outputs.reason }}
+      run: |
+        echo "Invalid branch name. Please review our branch naming guidelines."
+        exit 1
