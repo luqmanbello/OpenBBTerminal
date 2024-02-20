@@ -34,8 +34,8 @@ jobs:
     outputs:
       check-changes: ${{ steps.check-changes.outputs.check-changes }}
     steps:
-      - name: Delay for 10 Seconds
-        run: sleep 10s
+      - name: Delay for 15 Seconds
+        run: sleep 15s
 
       - name: Checkout
         uses: actions/checkout@v1 # v1 is used to preserve the git history and works with the git diff command
@@ -60,8 +60,8 @@ jobs:
       - name: Show output of previous step
         run:  echo "check-changes=${{ steps.check-changes.outputs.check-changes }}"
       
-      # - name: Debug labels
-      #   run: echo "labels=${{ toJson(github.event.pull_request.labels.*.name) }}"
+      - name: Debug labels
+        run: echo "labels=${{ toJson(github.event.pull_request.labels.*.name) }}"
 
   base-test:
     name: Base Tests - Ubuntu-latest - Python 3.9
