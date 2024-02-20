@@ -15,7 +15,7 @@ on:
     branches:
       - develop
       - main
-    types: [opened, synchronize, edited, closed, labeled, unlabeled]
+    types: [opened, synchronize, edited, closed, labeled]
   push:
     branches:
       - release/*
