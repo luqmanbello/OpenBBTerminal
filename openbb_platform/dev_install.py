@@ -3,7 +3,6 @@
 import subprocess
 import sys
 from pathlib import Path
-
 import toml
 
 PLATFORM_PATH = Path(__file__).parent.resolve()
