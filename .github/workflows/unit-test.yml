@@ -58,7 +58,7 @@ jobs:
         run:  echo "check-changes=${{ steps.check-changes.outputs.check-changes }}"
       
       - name: Debug labels
-        run: echo "labels=${{ github.event.pull_request.labels.*.name }}"
+        run: echo "labels=${{ toJson(github.event.pull_request.labels.*.name) }}"
 
   base-test:
     name: Base Tests - Ubuntu-latest - Python 3.9
