@@ -29,7 +29,7 @@ jobs:
   delay:
     name: Delay
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == false && github.event_name != 'push' && github.event.pull_request.draft == false
+    if: github.event_name == 'pull_request' && github.event.action == 'opened'
     steps:
       - name: Delay
         run: sleep 20
@@ -45,6 +45,10 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 100
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
 
       - name: Get changed files
         id: check-changes
