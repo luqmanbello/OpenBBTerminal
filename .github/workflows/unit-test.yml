@@ -34,8 +34,8 @@ jobs:
     outputs:
       check-changes: ${{ steps.check-changes.outputs.check-changes }}
     steps:
-      - name: Delay for 15 Seconds
-        run: sleep 15s
+      - name: Delay for 30 Seconds
+        run: sleep 30s
 
       - name: Checkout
         uses: actions/checkout@v1 # v1 is used to preserve the git history and works with the git diff command
