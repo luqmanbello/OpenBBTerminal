@@ -16,69 +16,46 @@ on:
       - develop
       - main
     types: [opened, synchronize, edited, closed, labeled]
+  workflow_run:
+    workflows: [Pull Request Labels]
+    types: [completed]
   push:
     branches:
       - release/*
   merge_group:
     types: [checks_requested]
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  delay:
-    name: Delay
-    runs-on: ubuntu-latest
-    steps:
-      - name: Delay
-        run: sleep 30
-
   check-files-changed:
     name: Check for changes
-    needs: [delay]
     runs-on: ubuntu-latest
     # Run this job only if the PR is not merged, PR != draft and the event is not a push
-    if: github.event.pull_request.merged == false && github.event_name != 'push' && github.event.pull_request.draft == false
+    if: github.event.pull_request.merged == false && github.event_name != 'push' && github.event.pull_request.draft == false && github.event.workflow_run.conclusion == 'success'
     outputs:
       check-changes: ${{ steps.check-changes.outputs.only_changed }}
     steps:
-      - name: checkout code
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v1 # v1 is used to preserve the git history and works with the git diff command
         with:
           fetch-depth: 100
+          # The GitHub token is preserved by default but this job doesn't need
+          # to be able to push to GitHub.
           persist-credentials: false
 
-      - name: Get changed files
+      - name: Check for changes to files to trigger unit test
         id: check-changes
-        uses: tj-actions/changed-files@v42
-        with:
-          files: |
-            *.py
-            openbb_terminal/**
-            pyproject.toml
-            poetry.lock
-            requirements.txt
-            requirements-full.txt
+        run: |
+          current_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
 
-      # - name: Checkout
-      #   uses: actions/checkout@v1 # v1 is used to preserve the git history and works with the git diff command
-      #   with:
-      #     fetch-depth: 100
-      #     # The GitHub token is preserved by default but this job doesn't need
-      #     # to be able to push to GitHub.
-      #     persist-credentials: false
-
-      # Check for changes to python files, lockfiles and the openbb_terminal folder
-      # - name: Check for changes to files to trigger unit test
-      #   id: check-changes
-      #   run: |
-      #     current_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
-
-      #     if git diff --name-only origin/$current_branch HEAD | grep -E ".py$|openbb_terminal\/.*|pyproject.toml|poetry.lock|requirements.txt|requirements-full.txt"; then
-      #       echo "check-changes=true" >> $GITHUB_OUTPUT
-      #     else
-      #       echo "check-changes=false" >> $GITHUB_OUTPUT
-      #     fi
+          if git diff --name-only origin/$current_branch HEAD | grep -E ".py$|openbb_terminal\/.*|pyproject.toml|poetry.lock|requirements.txt|requirements-full.txt"; then
+            echo "check-changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "check-changes=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Show changed files
         run:  echo "check-changes=${{ steps.check-changes.outputs.only_changed }}"
