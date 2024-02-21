@@ -11,11 +11,11 @@ env:
   PIP_DEFAULT_TIMEOUT: 100
 
 on:
-  # pull_request:
-  #   branches:
-  #     - develop
-  #     - main
-  #   types: [opened, synchronize, edited, closed, labeled]
+  pull_request:
+    branches:
+      - develop
+      - main
+    types: [opened, synchronize, edited, closed, labeled]
   workflow_run:
     workflows: [Pull Request Labels]
     types: [completed]
@@ -30,8 +30,28 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  check-labels-and-run-tests:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+      
+      - name: Check for labels
+        id: check-labels
+        run: |
+          labels=$(jq -r '.pull_request.labels[].name' $GITHUB_EVENT_PATH)
+          if [[ $labels == *"v4"* ]]; then
+            echo "v4=true" >> $GITHUB_OUTPUT
+          else
+            echo "v4=false" >> $GITHUB_OUTPUT
+          fi
+
   check-files-changed:
     name: Check for changes
+    needs: [check-labels-and-run-tests]
     runs-on: ubuntu-latest
     # Run this job only if the PR is not merged, PR != draft and the event is not a push
     if: github.event.pull_request.merged == false && github.event_name != 'push'
@@ -59,9 +79,6 @@ jobs:
 
       - name: Show changed files
         run:  echo "check-changes=${{ steps.check-changes.outputs.only_changed }}"
-      
-      - name: Debug labels
-        run: echo "labels=${{ toJson(github.event.pull_request.labels.*.name) }}"
 
   base-test:
     name: Base Tests - Ubuntu-latest - Python 3.9
