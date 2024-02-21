@@ -32,7 +32,6 @@ concurrency:
 jobs:
   check-labels-and-run-tests:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -40,6 +39,7 @@ jobs:
           ref: ${{ github.event.workflow_run.head_branch }}
       
       - name: Check for labels
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
         id: check-labels
         run: |
           labels=$(jq -r '.pull_request.labels[].name' $GITHUB_EVENT_PATH)
