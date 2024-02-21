@@ -11,11 +11,11 @@ env:
   PIP_DEFAULT_TIMEOUT: 100
 
 on:
-  pull_request:
-    branches:
-      - develop
-      - main
-    types: [opened, synchronize, edited, closed, labeled]
+  # pull_request:
+  #   branches:
+  #     - develop
+  #     - main
+  #   types: [opened, synchronize, edited, closed, labeled]
   workflow_run:
     workflows: [Pull Request Labels]
     types: [completed]
