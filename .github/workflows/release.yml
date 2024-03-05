@@ -27,7 +27,7 @@ jobs:
         uses: saadmk11/changelog-ci@v1.1.2
         with:
           changelog_filename: CHANGELOG.md
-          config_file: .github/changelog-ci-config.yml
+          config_file: changelog-ci-config.yml
           committer_username: 'luqmanbello'
           committer_email: 'luqman.bello@openbb.finance'
           release_version: ${{ github.event.inputs.release_version || '5.0.0' }}
