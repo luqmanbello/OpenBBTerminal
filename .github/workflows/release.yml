@@ -30,7 +30,7 @@ jobs:
           config_file: .github/changelog-ci-config.yml
           committer_username: 'luqmanbello'
           committer_email: 'luqman.bello@openbb.finance'
-          release_version: ${{ github.event.inputs.release_version }}
+          release_version: ${{ github.event.inputs.release_version || '5.0.0' }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get Changelog Output
@@ -54,8 +54,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the provided GITHUB_TOKEN for authentication
           INPUT_FILE: 'CHANGELOG.md'  # Path to your input file
           OUTPUT_FILE: 'test-output.md'  # Path to your output file
-          OWNER: 'OpenBB-finance'
-          REPO: 'terminalpro'
+          OWNER: 'luqmanbello'
+          REPO: 'OpenBBTerminal_fork'
         run: |
           python process-changelog.py --token $GITHUB_TOKEN --owner $OWNER --repo $REPO $INPUT_FILE $OUTPUT_FILE
 
