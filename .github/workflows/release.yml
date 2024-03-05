@@ -5,7 +5,8 @@ on:
     inputs:
       release_version:
         description: 'Set Release Version'
-        required: true
+        required: false
+        default: '5.0.0'
   pull_request:
     types: [opened, synchronize, reopened, closed]
 
