@@ -1,0 +1,7 @@
+# changelog_type: 'commit_message' # or 'pull_request'
+changelog_type: 'pull_request'
+header_prefix: '##'
+commit_changelog: false
+comment_changelog: true
+pull_request_title_regex: '##'
+version_regex: 'v?([0-9]{1,2})+[.]+([0-9]{1,2})+[.]+([0-9]{1,2})\s\(\d{1,2}-\d{1,2}-\d{4}\)'

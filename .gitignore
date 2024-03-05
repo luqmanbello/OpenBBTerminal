@@ -88,3 +88,4 @@ openbb_platform/openbb/package/*
 # Reference files
 website/content/excel/reference/*
 website/content/excel/reference/*/*
+/test-env

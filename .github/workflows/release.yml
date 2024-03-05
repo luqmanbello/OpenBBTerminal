@@ -1,0 +1,66 @@
+name: Generate Changelog
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Set Release Version'
+        required: true
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository
+      - uses: actions/checkout@v4
+
+      - name: Run Changelog CI
+        id: changelog-ci
+        uses: saadmk11/changelog-ci@v1.1.2
+        with:
+          changelog_filename: CHANGELOG.md
+          config_file: .github/changelog-ci-config.yml
+          committer_username: 'luqmanbello'
+          committer_email: 'luqman.bello@openbb.finance'
+          release_version: ${{ github.event.inputs.release_version }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get Changelog Output
+        run: |
+          echo "${{ steps.changelog-ci.outputs.changelog }}"
+          echo "${{ steps.changelog-ci.outputs.changelog }}" >> $GITHUB_STEP_SUMMARY
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+  
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+  
+      - name: Fetch PR Comments
+        id: fetch_pr_comments
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the provided GITHUB_TOKEN for authentication
+          INPUT_FILE: 'CHANGELOG.md'  # Path to your input file
+          OUTPUT_FILE: 'test-output.md'  # Path to your output file
+          OWNER: 'OpenBB-finance'
+          REPO: 'terminalpro'
+        run: |
+          python process-changelog.py --token $GITHUB_TOKEN --owner $OWNER --repo $REPO $INPUT_FILE $OUTPUT_FILE
+
+      - name: Get Final Changelog
+        run: |
+          echo "Final Changelog"
+          cat test-output.md
+          echo "Final Changelog" >> $GITHUB_STEP_SUMMARY
+          
