@@ -1,3 +1,8 @@
+# ## 5.0.0
+
+* [#51](https://github.com/luqmanbello/OpenBBTerminal_fork/pull/51): Delete test-output.md file
+
+
 * [#7](https://github.com/OpenBB-finance/terminalpro/pull/7): milestone 1 data
 * [#8](https://github.com/OpenBB-finance/terminalpro/pull/8): new data
 * [#9](https://github.com/OpenBB-finance/terminalpro/pull/9): analyst stuff
